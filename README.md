@@ -34,3 +34,19 @@ User question
         ↓
     Response
 
+# Phase 4 - creating api for this
+
+React
+  ↓
+HTTP
+  ↓
+FastAPI
+  ↓
+Chatbot
+  ↓
+OpenAI
+
+
+# Phase 5 - test the fast api
+
+# Phase 6 - create the React Frontend
