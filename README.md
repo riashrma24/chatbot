@@ -23,5 +23,14 @@ assistant message
     ↓
 messages
 
-
+# Phase 3 - giving the chatbot a usecase
+System instructions
+        +
+Conversation history
+        +
+User question
+        ↓
+       LLM
+        ↓
+    Response
 
