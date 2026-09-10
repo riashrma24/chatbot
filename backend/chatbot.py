@@ -13,33 +13,12 @@ class Chatbot:
         Explain concepts clearly and give examples whenever needed.
         Always start your sentences with 'Hey Girlypops!'
         """
-        self.messages=[]
     
-    def chat(self,message):
-        self.messages.append({
-            "type": "user_input",
-            "content": [
-                {
-                    "type": "text",
-                    "text": message
-                }
-            ]
-        })
-
+    def chat(self,history):
         response=self.client.interactions.create(
             model='gemini-3.5-flash-lite',
-            input=self.messages,
+            input=history,
             system_instruction=self.system_instruction
         )
-
-        self.messages.append({
-            "type": "model_output",
-            "content": [
-                {
-                    "type": "text",
-                    "text": response.output_text
-                }
-            ]
-        })
 
         return response.output_text
