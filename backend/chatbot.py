@@ -28,7 +28,8 @@ class Chatbot:
 
         response=self.client.interactions.create(
             model='gemini-3.5-flash-lite',
-            input=self.messages
+            input=self.messages,
+            system_instruction=self.system_instruction
         )
 
         self.messages.append({
