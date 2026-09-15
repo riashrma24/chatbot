@@ -50,3 +50,17 @@ OpenAI
 # Phase 5 - test the fast api
 
 # Phase 6 - create the React Frontend
+
+# Phase 7 - add db
+
+# Phase 8 - Add streaming
+
+LLM
+ ↓
+stream
+ ↓
+FastAPI
+ ↓
+SSE
+ ↓
+React
