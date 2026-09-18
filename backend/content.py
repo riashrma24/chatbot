@@ -1,5 +1,7 @@
+import httpx
 from sqlalchemy.orm import Session
 
+import drupal_client
 import models
 
 
@@ -84,9 +86,60 @@ def build_knowledge_pages(db: Session):
     return knowledge
 
 
-# ---- Seed data: run once so the demo has real rows to query instead of an --
-# empty database. A real app would populate these tables from an admin UI /
-# CMS import instead.
+# ---- Drupal sync: the real CMS import. Pulls every `page` node from
+# Drupal's JSON:API and upserts it into Page/ContentBlock, so the chatbot
+# (and any page renderer reading those tables) is grounded on the live
+# Drupal site instead of fixture data.
+
+def sync_from_drupal(db: Session) -> bool:
+    """Returns True if Drupal was reachable and the sync ran."""
+    try:
+        pages = drupal_client.fetch_pages()
+    except httpx.HTTPError as exc:
+        print(f"Drupal sync failed: {exc}")
+        return False
+
+    synced_paths = {page_data["path"] for page_data in pages}
+
+    for order, page_data in enumerate(pages):
+        page = db.query(models.Page).filter_by(path=page_data["path"]).first()
+        if page is None:
+            page = models.Page(path=page_data["path"])
+            db.add(page)
+        page.title = page_data["title"]
+        page.nav_label = page_data["title"]
+        page.nav_order = order
+        db.flush()
+
+        db.query(models.ContentBlock).filter_by(page_path=page_data["path"]).delete()
+        db.add(
+            models.ContentBlock(
+                page_path=page_data["path"],
+                heading=page_data["title"],
+                body=page_data["body_text"],
+            )
+        )
+
+    # Drop pages that no longer exist in Drupal so stale/fixture content
+    # never lingers in the chatbot's knowledge base.
+    stale_pages = db.query(models.Page).filter(models.Page.path.notin_(synced_paths)).all()
+    for page in stale_pages:
+        db.query(models.ContentBlock).filter_by(page_path=page.path).delete()
+        db.delete(page)
+
+    # Drupal's `page` content type has no structured pricing/contact fields
+    # today, only body copy (already synced above as a ContentBlock). Clear
+    # these fixture-only tables so old fabricated details (fake feature
+    # lists, fake support email) don't get blended into chatbot answers.
+    db.query(models.PricingPlan).delete()
+    db.query(models.ContactInfo).delete()
+
+    db.commit()
+    return True
+
+
+# ---- Seed data: fallback used only when Drupal can't be reached (e.g. ddev
+# isn't running), so local development still has something to query.
 
 def seed_if_empty(db: Session):
     if db.query(models.Page).count() > 0:

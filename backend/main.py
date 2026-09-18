@@ -15,7 +15,8 @@ chatbot = Chatbot()
 Base.metadata.create_all(bind=engine)
 
 with SessionLocal() as _db:
-    content.seed_if_empty(_db)
+    if not content.sync_from_drupal(_db):
+        content.seed_if_empty(_db)
 
 app.add_middleware(
     CORSMiddleware,
@@ -72,6 +73,7 @@ async def websocket_chat(websocket: WebSocket):
         while True:
             data = await websocket.receive_json()
             msg_type = data.get("type", "message")
+            print("Received:", data)
 
             if msg_type == "init":
                 site_name = (data.get("site") or {}).get("siteName", site_name)

@@ -1,0 +1,16 @@
+global:
+  css:
+    theme:
+      css/style.css: {}
+  js:
+    js/script.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
+splide:
+  css:
+    theme:
+      https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css: { type: external }
+  js:
+    https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js: { type: external }

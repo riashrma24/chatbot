@@ -1,0 +1,25 @@
+# Composer-managed dependencies.
+/vendor/
+
+# Drupal core is managed by Composer — don't version it.
+/web/core
+
+# Contrib modules/themes/profiles are managed by Composer.
+# Custom code (web/*/custom) is NOT ignored.
+/web/modules/contrib
+/web/themes/contrib
+/web/profiles/contrib
+
+# Sensitive/local config.
+/web/sites/*/settings.php
+/web/sites/*/settings.local.php
+!/web/sites/*/default.settings.php
+/web/sites/*/services.yml
+!/web/sites/*/default.services.yml
+
+# User-uploaded content.
+/web/sites/*/files
+/web/sites/*/private
+
+# Multi-site test environment.
+/web/sites/simpletest

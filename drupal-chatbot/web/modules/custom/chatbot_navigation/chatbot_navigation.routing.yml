@@ -1,0 +1,6 @@
+chatbot_navigation.navigate:
+  path: '/chatbot/navigate'
+  defaults:
+    _controller: '\Drupal\chatbot_navigation\Controller\NavigationController::navigate'
+  requirements:
+    _permission: 'access content'

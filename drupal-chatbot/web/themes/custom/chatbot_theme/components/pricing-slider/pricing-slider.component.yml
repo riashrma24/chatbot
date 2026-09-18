@@ -1,0 +1,11 @@
+name: Pricing Slider
+status: stable
+libraryOverrides:
+  dependencies:
+    - chatbot_theme/splide
+props:
+  type: object
+  properties:
+    title:
+      type: string
+      title: Title

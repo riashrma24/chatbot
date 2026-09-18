@@ -1,0 +1,8 @@
+name: Contact Test
+status: stable
+props:
+  type: object
+  properties:
+    title:
+      type: string
+      title: Title

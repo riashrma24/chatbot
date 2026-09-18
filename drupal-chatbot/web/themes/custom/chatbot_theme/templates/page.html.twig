@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html{{htmlAttributes}}>
+    <head>
+        <head-placeholder token='{{ placeholder_token }}'>
+        <title>{{ head_title }}</title>
+        <css-placeholder token='{{placeholder_token}}'>
+        <js-placeholder token='{{ placeholder_token }}'>
+    </head>
+    <body{{ attributes }}>
+        <header class='site-header'>
+            <h1>Sample drupal website</h1>
+            <nav>
+                <a href='/'>Home</a>
+                <a href='/about'>About</a>
+                <a href='/prices'>Pricing</a>
+                <a href='/contact-us'></a>
+            </nav>
+        </header>
+
+        <main id='main-content' class='site-main'>
+            {{ page.content }}
+        </main>
+
+        {% include '@chatbot_theme/chatbot.html.twig' %}
+
+        <footer class='site-footer'>
+            <p>My drupal website</p>
+        </footer>
+         <js-bottom-placeholder token="{{ placeholder_token }}">
+    </body>
+
+
+</html>

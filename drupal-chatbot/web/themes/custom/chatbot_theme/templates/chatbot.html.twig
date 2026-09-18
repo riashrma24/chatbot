@@ -1,0 +1,30 @@
+<div id='chatbot' class='chatbot'>
+    <button 
+    id='chatbot-toggle'
+    class='chatbot-toggle'
+    type='button'
+    aria-label='open-chatbot'
+    >C</button>
+
+    <div id='chatbot-panel' class='chatbot-panel' hidden>
+        <div class='chatbot-header'>
+            <span>My AI chatbot</span>
+            <button id='chatbot-close' type='button' aria-label='Close chatbot' >x</button>
+        </div>
+
+        <div class='chatbot-messages' id='chatbot-messages' aria-live='polite'>
+            <div class='chatbot-message bot'>
+            </div>
+        </div>
+
+        <div class='chatbot-input-row'>
+            <textarea id='chatbot-input'
+            rows="1"
+            placeholder='Ask me anything'
+            aria-label='chat input'
+            ></textarea>
+            <button id='chatbot-send' type='button'>Send</button>
+        </div>
+    
+    </div>
+</div>

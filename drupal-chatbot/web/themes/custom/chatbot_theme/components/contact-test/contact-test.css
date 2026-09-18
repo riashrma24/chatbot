@@ -1,0 +1,14 @@
+.contact-test {
+    padding: 30px;
+    margin: 20px 0;
+    border: 3px solid black;
+}
+
+.contact-test h2 {
+    font-size: 32px;
+}
+
+.contact-test-button {
+    padding: 10px 20px;
+    cursor: pointer;
+}

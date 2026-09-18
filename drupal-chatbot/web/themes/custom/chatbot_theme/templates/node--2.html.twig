@@ -1,0 +1,65 @@
+<article{{ attributes }}>
+
+  <div class="contact-content">
+    {{ content }}
+  </div>
+
+  {{ include('chatbot_theme:pricing-slider', {
+    title: 'Choose your plan'
+  }) }}
+
+  {# Test 1: inline CSS/JS. Banner should turn green on load — if it
+     stays yellow after a soft navigation, inline asset replay is broken. #}
+  <style>
+    #inline-test-banner {
+      background: #ffe680;
+      padding: 12px;
+      border: 2px dashed #cc9900;
+      font-weight: bold;
+    }
+  </style>
+
+  <div id="inline-test-banner">
+    Inline CSS/JS test: waiting for inline JS...
+  </div>
+
+  <script>
+    (function () {
+      var el = document.getElementById('inline-test-banner');
+      if (el) {
+        el.style.background = '#b6f5b6';
+        el.style.borderColor = '#339933';
+        el.textContent = 'Inline CSS/JS executed successfully';
+      }
+    })();
+  </script>
+
+  {# Test 2: asset injected after a delay, mimicking a widget that
+     appends its own <script>/<link> a few seconds after page load
+     (e.g. the opensenselabs.com chatbot). Guards against double
+     injection in case the crawler already discovered and loaded these
+     directly before this timer fires. #}
+  <div id="dynamic-test-banner">
+    Dynamic asset test: waiting for delayed JS/CSS (appears after ~4s)...
+  </div>
+
+  <script>
+    (function () {
+      setTimeout(function () {
+        if (!document.querySelector('link[href*="delayed-test.css"]')) {
+          var link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = '/themes/custom/chatbot_theme/css/delayed-test.css';
+          document.head.appendChild(link);
+        }
+
+        if (!document.querySelector('script[src*="delayed-test.js"]')) {
+          var script = document.createElement('script');
+          script.src = '/themes/custom/chatbot_theme/js/delayed-test.js';
+          document.head.appendChild(script);
+        }
+      }, 4000);
+    })();
+  </script>
+
+</article>

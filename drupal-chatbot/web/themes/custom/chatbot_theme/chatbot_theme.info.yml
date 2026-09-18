@@ -1,0 +1,8 @@
+name: Chatbot theme
+type: theme
+base theme: false
+core_version_requirement: ^11
+description: sample theme for chatbot implementation
+
+libraries:
+  - chatbot_theme/global

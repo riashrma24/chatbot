@@ -1,0 +1,7 @@
+name: Chatbot navigation
+type: module
+description: for soft navigation functionality
+package: Custom
+core_version_requirement: ^11
+
+
